@@ -2,10 +2,11 @@ library(data.table)
 library(stringr)
 library(dplyr)
 library(ggplot2)
+library(plyr)
 library(ggpubr)
 
 #Read in files, rename columns for easy merging
-mg_mt_mgm <- fread("all_reads_couns.tsv", sep="\t")
+mg_mt_mgm <- fread("all_reads_counts.tsv", sep="\t")
 colnames(mg_mt_mgm) <- c("counts", "Sample")
 mtm <- fread("total_reads_mt.txt", sep="\t")
 colnames(mtm)<- c("Sample", "counts")
@@ -31,6 +32,29 @@ data$counts2 <- data$counts/1000000
 data$Treatment<-factor(data$Treatment, levels = c("pH6","MES","G05","G10","pH8","pH10"))
 data$Replicate<-factor(data$Replicate, levels = c("F","E","D","C","B","A"))
 
+
+#summarise
+
+data_summary <- data %>%
+  group_by(Sample_type) %>%
+  summarise(mean=mean(counts2),
+            median=median(counts2),
+           sd=sd(counts2),
+           min=min(counts2),
+           max=max(counts2))
+
+
+hist <- ggplot(data, aes(x=counts2)) +
+  geom_histogram(binwidth=1) +
+  facet_grid(~Sample_type, scales = "free")
+hist
+
+mgm_list <- subset(data, Sample_type =="MG_merged" & counts2 > 14)
+mtm_list <- subset(data, Sample_type =="MT_merged" & counts2 > 30)
+
+
+#write.csv(mgm_list, "mg_14m_list.csv", row.names = FALSE)
+#write.csv(mtm_list, "mt_30m_list.csv", row.names = FALSE)
 #add missing data
 
 
@@ -105,16 +129,22 @@ p2 <- ggplot(data_mt, aes(y=Replicate, x=Day, fill = counts2)) +
   facet_grid (~Treatment)
 p2
 
-#data_mgm <- subset(data, Sample_type == "MG_merged")
-#p3 <- ggplot(data_mgm, aes(y=Replicate, x=Day, fill = counts2)) +
-#  geom_tile() +
-#  scale_fill_gradient2(low="#250e35", mid="#b13657", high="#ffffcc", midpoint = mean(rng), breaks = seq(0,100, 25),limits=c(floor(rng[1]),ceiling(rng[2]))) +
-#  theme_classic(base_size = 15) +
-#  coord_fixed() +
-#  labs(fill="Reads per million") +
-#  ggtitle("Number of merged Metagenomic reads") +
-#  facet_grid (~Treatment)
-#p3
+
+data_mgm <- subset(data, Sample_type == "MG_merged")
+data_mgm <- rbind.fill(data_mgm, temp)
+data_mgm$Treatment<-factor(data_mgm$Treatment, levels = c("pH6","MES","G05","G10","pH8","pH10"))
+data_mgm$Replicate<-factor(data_mgm$Replicate, levels = c("F","E","D","C","B","A"))
+
+
+p3 <- ggplot(data_mgm, aes(y=Replicate, x=Day, fill = counts2)) +
+  geom_tile() +
+  scale_fill_gradient2(na.value = "black", low="#250e35", mid="#b13657", high="#ffffcc", midpoint = mean(rng), breaks = seq(0,100, 25),limits=c(floor(rng[1]),ceiling(rng[2]))) +
+  theme_classic(base_size = 15) +
+  coord_fixed() +
+  labs(fill="Reads per million") +
+  ggtitle("Number of Merged Metagenomic reads") +
+  facet_grid (~Treatment)
+p3
 
 data_mtm <- subset(data, Sample_type == "MT_merged")
 data_mtm_summary <- data_mtm %>%
@@ -135,6 +165,34 @@ p4 <- ggplot(data_mtm, aes(y=Replicate, x=Day, fill = counts2)) +
   facet_grid (~Treatment)
 p4
 
-p2
 
-ggarrange(p1, p2,p4,ncol=1)
+
+
+ggarrange(p1, p2, p3, p4,ncol=1, labels = "AUTO", font.label = list(size = 20))
+
+ggsave("read_counts.tiff", device = "tiff", dpi = 700)
+ggsave("read_counts.png", device = "png", dpi = 700)
+ggsave("read_counts.pdf", device = "pdf", dpi = 700)
+
+
+
+######### file size table ###
+
+
+data$Sample <-str_replace(data$Sample, ".fastq.1.gz.counts", "")
+data$Sample <-str_replace(data$Sample, ".R1.fastq.cleaned.forward", "")
+
+data_keep <- subset(data, Sample_type %in% c("Metagenome", "Metatranscriptome"))
+
+data_mg <- subset(data, Sample_type == "Metagenome")
+data_mt <- subset(data, Sample_type == "Metatranscriptome")
+
+
+
+d_size <- read.csv("CR_filesizes.csv", header = TRUE)
+
+d_size_summ <- d_size %>%
+  group_by(Dataset) %>%
+  summarise(mean = mean(Size_GB),
+            sd=sd(Size_GB),
+            sum=sum(Size_GB))

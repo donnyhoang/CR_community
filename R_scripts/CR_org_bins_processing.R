@@ -55,14 +55,23 @@ data_table_org[c("bin","fasta")] <- str_split_fixed(data_table_org$Gene, "[.]", 
 data_table_org$bin <- gsub(" ", "", as.character(data_table_org$bin))
 data_table_org <- data_table_org[,c(2:4)]
 
+data_table_org <- data_table_org %>%
+  group_by(variable, bin) %>%
+  summarise(value = sum(value))
 
-
-#add raw counts
+#add raw counts mt
 counts <- read.table("total_reads_mt.txt", header=FALSE, sep ="\t")
 counts$V1 <- gsub("_mt.R1.fastq.cleaned.forward","",as.character(counts$V1))
 
 colnames(counts)[1] = "variable"
 colnames(counts)[2] = "counts"
+
+#add raw counts mg
+
+counts <- read.csv("CR_read_counts_merged_mg.csv", header = FALSE)
+counts$V2 <- gsub("_mg","",as.character(counts$V2))
+colnames(counts)[2] = "variable"
+colnames(counts)[1] = "counts"
 
 #merge with counts
 data_table_total <- merge (data_table_org, counts, by = "variable")
@@ -72,28 +81,16 @@ total_table <- data_table_total %>%
 
 
 #read bin tables (checkm, CATBAT) that have taxonomy info
-tax1 <- read.csv("rep_bins_autometa_qa.csv")
-colnames(tax1)[1] <- "bin"
-tax1[c("classification","UID")] <- str_split_fixed(tax1$Markerlineage , " ", 2)
-tax1$UID <- gsub("[(]","",as.character(tax1$UID))
-tax1$UID <- gsub("[)]","",as.character(tax1$UID))
-tax1 <- tax1[,c(1,2,30,31)]
-
-tax2 <- read.table("out.BAT.bin2classification.official_names.txt", sep="\t", header=TRUE)
-tax2$bin <- gsub(".fasta","",as.character(tax2$bin))
-tax2 <- tax2[,c(1,6:12)]
-
-tax <- merge(tax1, tax2, by = "bin")
-
-
+tax <- read.csv("CR_bin_tax_cluster.csv")
 
 #merge tables
 total_table <- merge(total_table, tax, by ="bin")
-
-total_table[c("Treatment","Day","Replicate")] <- str_split_fixed(total_table$variable, "_", 3)
-total_table$Treatment<-factor(total_table$Treatment, levels = c("pH6","MES","G05","G10","pH8","pH10"))
-
 length(unique(total_table$bin))
+total_table[c("Treatment","Day","Replicate")] <- str_split_fixed(total_table$variable, "_", 3)
+
+
+#write.csv(total_table, "CR_org_total_table.csv", row.names = FALSE)
+
 
 #total_table_trim <- total_table[,c(1:5,12,16:18)]
 

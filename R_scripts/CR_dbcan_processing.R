@@ -44,9 +44,9 @@ control_table_trimmed <- control_table[,-1]
 data_table <- melt(cbind(control_table_trimmed,
                          Gene = rownames(control_table_trimmed)))
 
-#cleanup strings
+#cleanup strings, change as needed when doing mg vs mt
 data_table$variable <- gsub("./", "", as.character(data_table$variable))
-data_table$variable <- gsub("_mt.dbcan_annot_function.tsv", "", as.character(data_table$variable))
+data_table$variable <- gsub("_mg.dbcan_annot_function.tsv", "", as.character(data_table$variable))
 data_table$Gene <- gsub(",", "", as.character(data_table$Gene))
 
 #string split Gene column
@@ -56,13 +56,23 @@ data_table_dbcan <- data_table_dbcan[,c(1:4)]
 colnames(data_table_dbcan)[1] = "cazy"
 data_table_dbcan$cazy <- gsub(" ", "", as.character(data_table_dbcan$cazy))
 data_table_dbcan$bin <- gsub(" ", "", as.character(data_table_dbcan$bin))
+data_table_total <- data_table_dbcan
 
-#add raw counts
+
+
+#add raw counts mt
 counts <- read.table("total_reads_mt.txt", header=FALSE, sep ="\t")
 counts$V1 <- gsub("_mt.R1.fastq.cleaned.forward","",as.character(counts$V1))
 
 colnames(counts)[1] = "variable"
 colnames(counts)[2] = "counts"
+
+#add raw counts mg
+counts <- read.csv("CR_read_counts_merged_mg.csv", header = FALSE)
+counts$V2 <- gsub("_mg","",as.character(counts$V2))
+colnames(counts)[2] = "variable"
+colnames(counts)[1] = "counts"
+
 
 #merge with counts
 data_table_total <- merge (data_table_dbcan, counts, by = "variable")
@@ -93,84 +103,68 @@ tax <- read.csv("CR_bin_tax_cluster.csv")
 
 #merge tables
 total_table <- merge(hmm, data_table_total, by ="cazy")
-
 total_table <- merge(total_table, tax, by ="bin")
 
 
-length(unique(total_table$Markerlineage))
-length(unique(total_table$UID))
-length(unique(total_table$phylum))
-length(unique(total_table$class))
+length(unique(total_table$bin))
 length(unique(total_table$order))
-length(unique(total_table$CAZy))
-length(unique(total_table$cazy))
+
 
 
 #sort into cazyme functions
 
-cellulases <- c("GH5_","GH5_1", "GH5_2", "GH5_4", "GH5_5", "GH6", "GH5_7", "GH5_8", "GH5_11", "GH5_12", "GH5_13", "GH5_15", "GH5_16", "GH5_18", "GH5_19", "GH5_2","GH5_22", "GH5_23", "GH5_24", "GH5_25", "GH5_26", "GH5_27", "GH5_28", "GH5_29", "GH5_30", "GH5_31", "GH5_36", "GH5_37", "GH5_38", "GH5_39", "GH5_4", "GH5_40", "GH5_41", "GH5_43", "GH5_44", "GH5_45", "GH5_46", "GH5_47", "GH5_48", "GH5_49", "GH5_5", "GH5_50", "GH5_51", "GH5_53", "GH5_7", "GH5_8", "GH5_9",
-                "GH6","GH7","GH8","GH9","GH12","GH16","GH26","GH44","GH45","GH48", "GH51","GH61","GH74","GH131", "AA9", "AA10")
-xylanases <- c("GH10","GH11",
-               "GH30","GH30_","GH30_2","GH30_3","GH30_5","GH30_7",
-               "GH67","GH115","GH129")
-ligninases <- c("AA1","AA1_","AA1_1","AA1_2","AA1_3","AA2")
-other_oxidases <- c("AA4","AA5","AA5_1","AA5_2","AA6","AA7","AA8","AA12")
-GMC_oxidoreductases <- c("AA3","AA3_","AA3_1","AA3_2","AA3_3")
-amylases <- c("GH13_1","GH13_2","GH13_3","GH13_4","GH13_5","GH13_6","GH13_7","GH13_8","GH13_9","GH13_10","GH13_11","GH13_12","GH13_13","GH13_14","GH13_15","GH13_16","GH13_17","GH13_18","GH13_19","GH13_20","GH13_21","GH13_22","GH13_23","GH13_24","GH13_25","GH13_26","GH13_27","GH13_28","GH13_29","GH13_30","GH13_31","GH13_32","GH13_33","GH13_34","GH13_35","GH13_36","GH13_37","GH13_38","GH13_39","GH13_40",
-              "GH14")
-betaglucanases <- c("GH1","GH3")
+#read in table
+cazy_func <- read.csv("cazyme_list_referenece.csv", header = TRUE)
+cazy_func <- cazy_func[,c(1:3)]
 
-cazy_all <- c(cellulases, xylanases, ligninases, other_oxidases, GMC_oxidoreductases, amylases, betaglucanases)
+#make everything not in cazy_func into "other"
+other_cazy <- as.data.frame(unique(total_table$CAZy))
+colnames(other_cazy)[1] <- "CAZy"
+cazy_list <- cazy_func$CAZy
+other_cazy <- filter(other_cazy, !CAZy %in% cazy_list)
+other_cazy$Activity <- "Other"
+other_cazy$Substrate <- "Other"
 
+colnames(other_cazy) <- colnames(cazy_func)
 
-
-
-cazy_cellu <- subset(total_table, CAZy %in% cellulases)
-cazy_cellu$func <-"cellulase"
-cazy_xylan <- subset(total_table, CAZy %in% xylanases)
-cazy_xylan$func <- "xylanase"
-cazy_lignin <- subset(total_table, CAZy %in% ligninases)
-cazy_lignin$func <- "ligninase"
-cazy_other_oxidases <- subset(total_table, CAZy %in% other_oxidases)
-cazy_other_oxidases$func <- "other oxidases"
-cazy_GMC_oxidoreductases <- subset(total_table, CAZy %in% GMC_oxidoreductases)
-cazy_GMC_oxidoreductases$func <- "GMC oxidoreductases"
-cazy_amylase <- subset(total_table, CAZy %in% amylases)
-cazy_amylase$func <- "amylase"
-cazy_beta <- subset(total_table, CAZy %in% betaglucanases)
-cazy_beta$func <- "betaglucanase"
-cazy_other <- subset(total_table, !(CAZy %in% cazy_all))
-cazy_other$func <- "other"
-cazy_total <- rbind(cazy_cellu, cazy_xylan,cazy_lignin,cazy_other_oxidases,cazy_GMC_oxidoreductases,cazy_amylase,cazy_beta, cazy_other)
-cazy_total[c("Treatment","Day","Replicate")] <- str_split_fixed(cazy_total$variable, "_", 3)
+cazy_func <- rbind(cazy_func, other_cazy)
 
 
-#write.csv(cazy_total, "CR_dbcan_total_table.csv", row.names = FALSE)
+total_table <- merge(total_table, cazy_func, by = "CAZy")
+
+
+#write out metadata from variable
+total_table[c("Treatment", "Day", "Replicate")] <- str_split_fixed(total_table$variable, "_", 3)
+total_table <- total_table[,-c(4:6)]
+write.csv(total_table, "CR_dbcan_total_table_14m.csv", row.names = FALSE)
 
 
 
+############### Get MAG data ################
+hmm[c("bin", "unused")] <- str_split_fixed(hmm$cazy, "[.]", 2)
+hmm <- hmm[,c(1,2,6)]
+hmm <- hmm[!grepl("#", hmm$CAZy),]
 
+#make everything not in cazy_func into "other"
 
-data_trim <- cazy_total %>%
-  group_by(Treatment,Day, Replicate) %>%
-  summarise(sum=sum(percent),
-            count=n())
-data_trim$Day <- as.character(data_trim$Day)
+other_cazy <- as.data.frame(unique(hmm$CAZy))
+colnames(other_cazy)[1] <- "CAZy"
 
+cazy_func <- read.csv("cazyme_list_referenece.csv", header = TRUE)
+cazy_func <- cazy_func[,c(1:3)]
 
+cazy_list <- cazy_func$CAZy
+other_cazy <- filter(other_cazy, !CAZy %in% cazy_list)
+other_cazy$Activity <- "Other"
+other_cazy$Substrate <- "Other"
 
-palette <-c( "#56B4E9", "#999999","#E69F00","#0072B2", "#F0E442","#CC79A7")
-pbox <- ggplot(data_trim, aes(x=Day, y=sum, fill=Treatment)) +
-  geom_boxplot() +
-  scale_fill_manual(values=palette) +
-  #scale_color_manual(values=pal1) +
-  theme_classic(base_size=20) +
-  #ylim(0,19) +
-  ylab("Percent reads mapped to dbCAN") + 
-  xlab("Time (Day sampled)") +
-  #theme(axis.text.x=element_text(angle=45,hjust=1)) +
-  theme(aspect.ratio=1)+
-  facet_wrap(  ~ Treatment , scales = "free_x")
-pbox
+colnames(other_cazy) <- colnames(cazy_func)
 
+cazy_func <- rbind(cazy_func, other_cazy)
 
+#merge
+
+merge1 <- merge(hmm, tax, by = "bin")
+merge2 <-merge(merge1, cazy_func, by = "CAZy")
+
+write.csv(merge2, "CR_dbcan_MAG_annotation_total.csv", row.names = FALSE)

@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyverse)
 
 
-###############load in data, prepare for phyloseq
+###############load in data, prepare for phyloseq processing later
 data <- read.csv("CR_taxmatrix.csv", row.names=1 , header=TRUE)
 write.csv(data, "CR_counts_for_phyloseq.csv", row.names = TRUE)
 
@@ -66,6 +66,7 @@ tax$Species <- gsub("[.]", "", tax$Species)
 
 #save and edit the rest in excel. removing whtiespace from species can be confusing for later, so do it in excel.
 write.csv(tax, "CR_taxa_for_phyloseq.csv", row.names = TRUE)
+
 
 #create metadata table
 

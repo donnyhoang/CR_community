@@ -197,63 +197,36 @@ p_rep <- ggplot(data, aes(x=Contamination , y=Completeness, color=is_rep, size =
   guides(color=FALSE, size=FALSE, shape=guide_legend("Representative Bin"))
 p_rep
 
-completeness <- ggplot(data, aes(x=all , y=Completeness, color=quality)) +
-  geom_jitter(alpha=1/5) +
+completeness <- ggplot(data, aes(x=all , y=Completeness, color=is_rep, size = is_rep)) +
+  geom_jitter(alpha=0.7) +
   theme_classic(base_size=15)  +
   scale_color_manual(values=palette)  +
+  scale_size_manual(values=c(1,2)) +
   labs(y="Percent Completeness") +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank()) +
-  guides(color=FALSE)
+  guides(size=FALSE, color = guide_legend("Representative Bin"))
 
 completeness
 
 
-contamination <- ggplot(data, aes(x=all , y=Contamination, color=quality)) +
-  geom_jitter(alpha=1/5) +
+contamination <- ggplot(data, aes(x=all , y=Contamination, color=is_rep, size = is_rep)) +
+  geom_jitter(alpha=0.7) +
   theme_classic(base_size=15) +
   scale_color_manual(values=palette)  +
+  scale_size_manual(values=c(1,2)) +
   labs(y="Percent Contamination")+
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank()) +
-  guides(color=FALSE)
+  guides(size=FALSE, color = guide_legend("Representative Bin"))
 contamination
 
-genomesize <-ggplot(data, aes(x=all , y=GenomesizeMb, color=quality)) +
-  geom_jitter(alpha=1/5) +
-  theme_classic() +
-  scale_color_manual(values=palette)  +
-  labs(y="Genome Size (Mb)")
-genomesize
-
-colorCount <-length(unique(tax_total$Var1))
-getPalette = colorRampPalette(brewer.pal(9, "Set1"))
 
 
-#########this may be better as bubble plot
+bin_qual <- ggarrange(completeness, contamination, common.legend = TRUE, legend = "right")
+bin_qual
 
-totals <- tax_total %>%
-  group_by(Treatment) %>%
-  summarise(total=sum(Freq))
-
-ptax <- ggplot(tax_total,aes(x=Treatment, y=Freq, fill=Var1, color=Var1))+
-  geom_bar(stat="identity") +
-  theme_classic(base_size=15) +
-  theme(axis.text.x= element_text(angle=45, hjust=1),
-        legend.position="right") +
-  scale_fill_manual(values=getPalette(colorCount)) +
-  scale_color_manual(values=getPalette(colorCount)) +
-  guides(color="none", fill=guide_legend("Classification")) +
-  labs(y="Number of high quality bins") +
-  geom_text(data=totals, aes(Treatment, total, label = total, color=NULL, fill = NULL), vjust=-1)
-
-ptax
-
-
-
-
-
-ggarrange(completeness, contamination)
+ggsave("bin_qual.png", heigh = 6, width = 8 , units = "in")
 
 
 ############graph of rep bin genome size
@@ -313,6 +286,8 @@ palorg <- c("#8DD3C7","#FFFFB3","#BEBADA","#FB8072","#80B1D3","#FDB462",
 tax$Order<-factor(tax$Order, levels=c("Actinomycetales","Burkholderiales","Caulobacterales","Corynebacteriales","Enterobacterales","Flavobacteriales",
                                                     "Lactobacillales","Micrococcales","Propionibacteriales","Pseudomonadales","Rhizobiales",
                                                     "Sphingobacteriales","Xanthomonadales","no support"))
+
+write.csv(tax, "MAG_info.csv", row.names= FALSE)
 
 p <-ggplot() + 
   geom_point(data=tax, aes(y=Genomesizemb,x=Order), size = 3) +
