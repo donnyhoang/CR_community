@@ -89,6 +89,7 @@ p1 <- ggplot(data_mg, aes(y=Replicate, x=Day, fill = counts2)) +
   facet_grid (~Treatment)
 p1
 
+
 data_mt <- subset(data, Sample_type == "Metatranscriptome")
 data_mt_summary <- data_mt %>%
   summarise(mean = mean(counts2),

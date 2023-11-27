@@ -129,3 +129,8 @@ fig
 ggsave("ph_cod_cazy.tiff", device = "tiff", dpi = 700)
 ggsave("ph_cod_cazy.png", device = "png", dpi = 700)
 ggsave("ph_cod_cazy.pdf", device = "pdf", dpi = 700)
+
+
+ph_cod <- plot_grid(p1, p2, nrow = 2, rel_widths = c(10,10))
+ph_cod
+ggsave("ph_cod.png", device = "png", dpi = 700)

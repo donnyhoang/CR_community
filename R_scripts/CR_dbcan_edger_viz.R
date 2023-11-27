@@ -538,7 +538,22 @@ title <- ggdraw() +
   )
 
 
+#l1 <-plot_grid(get_legend(p_main_Lignin_order))
+#l2 <- plot_grid(get_legend(p_main_Xylan_ce))
+#l3 <- plot_grid(get_legend(p_main_Lignin_cazy))
+
+#l1
+#ggsave("l1.png", dpi = 700)
+#l2
+#ggsave("l2.png", dpi = 700)
+#l3
+#ggsave("l3.png", dpi = 700)
+
+
 legend_main <- plot_grid(get_legend(p_main_Lignin_order), get_legend(p_main_Xylan_ce),get_legend(p_main_Lignin_cazy), ncol = 1)
+
+legend_main
+
 
 p1 <- p_main_Xylan_order + theme(legend.position="none")
 p2 <- p_main_Lignin_order + theme(legend.position="none")
