@@ -1,0 +1,55 @@
+"bin","cluster_total","superkingdom","phylum","class","order","family","genus","species","cluster_ph6"
+"G05_1_E_cluster_DBSCAN_round3_4",1,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Enterococcaceae","Enterococcus","Enterococcus saccharolyticus",2
+"G05_2_B_cluster_DBSCAN_round2_17",2,"Bacteria","Bacteroidetes","Sphingobacteriia","Sphingobacteriales","Sphingobacteriaceae","Sphingobacterium","no support",1
+"G05_2_C_cluster_DBSCAN_round3_1",2,"Bacteria","Proteobacteria","Betaproteobacteria","Burkholderiales","Alcaligenaceae","Alcaligenes","no support",1
+"G05_3_E_cluster_DBSCAN_round7_3",1,"Bacteria","Actinobacteria","Actinobacteria","Corynebacteriales","Corynebacteriaceae","Corynebacterium","Corynebacterium variabile",2
+"G05_5_C_cluster_DBSCAN_round2_2",1,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Enterococcaceae","Enterococcus","no support",2
+"G05_6_E_cluster_DBSCAN_round5_10",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Brevibacteriaceae","Brevibacterium","Brevibacterium senegalense",3
+"G05_6_E_cluster_DBSCAN_round6_6",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Brucellaceae","no support","no support",3
+"G05_6_E_cluster_DBSCAN_round7_6",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales",NA,"Timonella","Timonella senegalensis*",3
+"G05_7_A_cluster_DBSCAN_round8_2",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Microbacterium","no support",2
+"G05_7_C_cluster_DBSCAN_round4_18",1,"Bacteria","Actinobacteria","Actinobacteria","Propionibacteriales","Propionibacteriaceae","Tessaracoccus","no support",2
+"G10_2_C_cluster_DBSCAN_round1_10",0,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Leuconostocaceae","Weissella","no support",0
+"G10_3_A_cluster_DBSCAN_round5_0",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Dermabacteraceae","Brachybacterium","no support",2
+"G10_3_D_cluster_DBSCAN_round210_2",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","no support","no support","no support",1
+"G10_6_B_cluster_DBSCAN_round179_0",2,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Cellulomonadaceae","Cellulomonas","Cellulomonas hominis",1
+"G10_6_E_cluster_DBSCAN_round5_1",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Brucellaceae","Ochrobactrum","no support",1
+"G10_7_A_cluster_DBSCAN_round160_0",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Leucobacter","Leucobacter celer",2
+"G10_7_C_cluster_DBSCAN_round1_6",2,"Bacteria","Proteobacteria","Betaproteobacteria","Burkholderiales","Alcaligenaceae","Achromobacter","no support",1
+"G10_7_C_cluster_DBSCAN_round7_14",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Microbacterium","no support",1
+"G10_7_C_cluster_DBSCAN_round7_2",2,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Microbacterium","no support",1
+"G10_7_E_cluster_DBSCAN_round81_0",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","no support","no support","no support",2
+"MES_1_D_cluster_DBSCAN_round2_17",1,"Bacteria","Actinobacteria","Actinobacteria","Actinomycetales",NA,NA,"Actinomycetales bacterium JB",2
+"MES_1_E_cluster_DBSCAN_round6_3",1,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Enterococcaceae","Enterococcus","no support",2
+"MES_2_C_cluster_DBSCAN_round3_1",2,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Dermabacteraceae","Brachybacterium","no support",3
+"MES_5_C_cluster_DBSCAN_round8_4",1,"Bacteria","Proteobacteria","Gammaproteobacteria","no support","no support","no support","no support",3
+"MES_7_C_cluster_DBSCAN_round4_2",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Dermabacteraceae","Brachybacterium","no support",1
+"MES_7_D_cluster_DBSCAN_round362_17",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","no support","no support","no support",2
+"MES_7_E_cluster_DBSCAN_round2_10",2,"Bacteria","Proteobacteria","Gammaproteobacteria","Xanthomonadales","Xanthomonadaceae","Stenotrophomonas","no support",1
+"pH10_1_E_cluster_DBSCAN_round1_4",1,"Bacteria","Proteobacteria","Gammaproteobacteria","Enterobacterales","no support","no support","no support",2
+"pH10_1_E_cluster_DBSCAN_round2_19",2,"Bacteria","Proteobacteria","Betaproteobacteria","Burkholderiales","Comamonadaceae","Acidovorax","Acidovorax sp. MR-S",1
+"pH10_1_E_cluster_DBSCAN_round2_2",0,"Bacteria","Bacteroidetes","Flavobacteriia","Flavobacteriales","Flavobacteriaceae","Myroides","Myroides indicus",0
+"pH10_2_A_cluster_DBSCAN_round2_4",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Caulobacterales","Caulobacteraceae","Brevundimonas","no support",1
+"pH10_2_A_cluster_DBSCAN_round6_5",2,"Bacteria","Proteobacteria","Betaproteobacteria","Burkholderiales","Alcaligenaceae","Achromobacter","no support",1
+"pH10_4_D_cluster_DBSCAN_round1_1",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Brucellaceae","Pseudochrobactrum","Pseudochrobactrum asaccharolyticum",1
+"pH10_6_A_cluster_DBSCAN_round525_32",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Brevibacteriaceae","Brevibacterium","Brevibacterium senegalense",3
+"pH10_6_C_cluster_DBSCAN_round2_10",1,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Enterococcaceae","Enterococcus","no support",2
+"pH10_6_E_cluster_DBSCAN_round5_14",2,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Micrococcaceae","Galactobacter","no support",3
+"pH10_7_A_cluster_DBSCAN_round2_25",2,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Leucobacter","no support",1
+"pH10_7_B_cluster_DBSCAN_round161_0",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Phyllobacteriaceae","Aquamicrobium","Aquamicrobium lusatiense",1
+"pH10_7_C_cluster_DBSCAN_round5_6",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Hyphomicrobiaceae","Devosia","no support",1
+"pH10_7_C_cluster_DBSCAN_round7_1",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Phyllobacteriaceae","Aquamicrobium","Aquamicrobium lusatiense",1
+"pH10_7_C_cluster_DBSCAN_round7_4",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","no support","no support","no support",1
+"pH10_7_E_cluster_DBSCAN_round3_20",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","no support","no support","no support",1
+"pH10_7_F_cluster_DBSCAN_round4_20",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Microbacterium","no support",2
+"pH10_7_F_cluster_DBSCAN_round5_0",0,"Bacteria","Bacteroidetes","Sphingobacteriia","Sphingobacteriales","Sphingobacteriaceae","Sphingobacterium","no support",0
+"pH6_1_A_cluster_DBSCAN_round1_4",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Microbacteriaceae","Gulosibacter","Gulosibacter faecalis",3
+"pH6_1_D_cluster_DBSCAN_round2_7",1,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Enterococcaceae","no support","no support",2
+"pH6_2_E_cluster_DBSCAN_round5_7",1,"Bacteria","Actinobacteria","Actinobacteria","Corynebacteriales","Corynebacteriaceae","Corynebacterium","Corynebacterium nuruki",2
+"pH6_4_F_cluster_DBSCAN_round203_0",1,"Bacteria","Actinobacteria","Actinobacteria","Micrococcales","Cellulomonadaceae","Cellulomonas","Cellulomonas hominis",3
+"pH6_6_D_cluster_DBSCAN_round9_1",2,"Bacteria","Bacteroidetes","Sphingobacteriia","Sphingobacteriales","Sphingobacteriaceae","Sphingobacterium","no support",1
+"pH8_2_E_cluster_DBSCAN_round1_4",1,"Bacteria","Proteobacteria","Gammaproteobacteria","Pseudomonadales","Moraxellaceae","Acinetobacter","no support",2
+"pH8_6_D_cluster_DBSCAN_round6_12",1,"Bacteria","Firmicutes","Bacilli","Lactobacillales","Enterococcaceae","Enterococcus","no support",2
+"pH8_7_C_cluster_DBSCAN_round6_1",2,"Bacteria","Proteobacteria","Alphaproteobacteria","Rhizobiales","Hyphomicrobiaceae","Pelagibacterium","no support",1
+"pH8_7_D_cluster_DBSCAN_round9_5",2,"Bacteria","Proteobacteria","Betaproteobacteria","Burkholderiales","Alcaligenaceae","Pusillimonas","no support",1
+"pH8_7_F_cluster_DBSCAN_round202_0",2,"Bacteria","Proteobacteria","no support","no support","no support","no support","no support",1
